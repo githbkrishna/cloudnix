@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f6f9fb;
+    }
+    .sidebar {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 0 20px 0;
+      height: calc(100vh - 40px);
+      min-width: 200px;
+    }
+    .sidebar .list-group-item {
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      padding: 10px 24px 10px 30px;
+      color: #2d334d;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-bottom: 2px;
+      transition: background .13s;
+    }
+    .sidebar .list-group-item.active {
+      background: #e5f2ff;
+      color: #167ef9;
+      font-weight: 600;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #7a809a;
+      margin-left: 6px;
+      margin-bottom: 18px;
+    }
+    .main-header {
+      font-weight: bold;
+      font-size: 2rem;
+      margin-bottom: 2px;
+      letter-spacing: -1px;
+    }
+    .summarize-btn {
+      float: right;
+      border-radius: 7px;
+      margin-top: 0.5rem;
+      font-size: 15px;
+      padding: 6px 18px;
+    }
+    .card-feedback {
+      border-radius: 12px;
+      background: #fff;
+      min-height: 195px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 8px rgba(32,48,80,.08);
+      padding-top: 18px;
+      padding-bottom: 12px;
+      position: relative;
+    }
+    .card-feedback .stars {
+      color: #fabb3d;
+      font-size: 1.1em;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+    }
+    .labels span {
+      margin-right: 5px;
+      background: #f1f4f7;
+      color: #6370a9;
+      font-size: 11.5px;
+      border-radius: 5px;
+      padding: 2px 7px 2px 7px;
+    }
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 4px;
+    }
+    .avatar-sm {
+      border-radius: 50%;
+      margin-right: 7px;
+      width: 32px;
+      height: 32px;
+    }
+    .card-user {
+      display: flex;
+      align-items: center;
+      font-size: 14.5px;
+      margin-bottom: 5px;
+    }
+    .btn-action {
+      min-width: 80px;
+      font-size: .98rem;
+      margin-left: 1px;
+    }
+    .dropdown-toggle::after {
+      margin-left: 10px;
+      vertical-align: 3px;
+    }
+    .dropdown .dropdown-menu {
+      min-width: 120px;
+    }
+    @media (max-width:991.5px) {
+      .sidebar { min-width:100%; height:auto; border-radius:12px; }
+      .summarize-btn { float: none; margin-bottom: 8px;}
+    }
+    @media (max-width:575px) {
+      .main-header { font-size: 1.3rem;}
+      .sidebar { padding: 14px;}
+      .summarize-btn { width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid py-3">
+    <div class="row">
+      <!-- Left Sidebar -->
+      <div class="col-lg-2 col-md-3 mb-3 mb-lg-0">
+        <div class="sidebar shadow-sm">
+          <div class="main-header ms-3 mb-0">Feedback</div>
+          <div class="subtitle ms-2">You will get user feedback on AI generated test cases</div>
+          <ul class="list-group mt-3 border-0" id="sidebar-apps">
+            <li class="list-group-item active" data-app="All">All</li>
+            <li class="list-group-item" data-app="TaskMaster">TaskMaster</li>
+            <li class="list-group-item" data-app="FitTrack">FitTrack</li>
+            <li class="list-group-item" data-app="ShopEase">ShopEase</li>
+            <li class="list-group-item" data-app="LearnNow">LearnNow</li>
+            <li class="list-group-item" data-app="TravelGo">TravelGo</li>
+            <li class="list-group-item" data-app="HeathSync">HeathSync</li>
+            <li class="list-group-item" data-app="EventMate">EventMate</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="col-lg-10 col-md-9">
+        <button class="btn btn-primary summarize-btn" id="btn-summarize">Summarize</button>
+        <div class="row pt-2 pt-md-0" id="feedback-cards-container">
+          <!-- Feedback Cards Render Here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Username Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="userForm">
+          <div class="modal-header"><h5 class="modal-title">Welcome!</h5></div>
+          <div class="modal-body pt-3">
+            <label for="usernameInput" class="form-label mb-2">Enter your name</label>
+            <input type="text" class="form-control" id="usernameInput" maxlength="20" required autocomplete="off">
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+          <div class="modal-footer pt-2">
+            <button type="submit" class="btn btn-primary px-4">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap & jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Feedback data sample
+    const feedbackData = [
+      {
+        id: 1, app: "TaskMaster", tag: "#TC01", labels: ["UI/UX"], rating: 3, name: "Steward leo",
+        text: "The navigation bar is a bit confusing, especially when switching between different sections. The icons are not intuitive, and it takes a while to understand where each feature is located. It would be helpful to have labels or tooltips when hovering over the icons. A collapsible sidebar might also improve usability."
+      },
+      {
+        id: 2, app: "FitTrack", tag: "#FT01", labels: ["Bug Report"], rating: 2, name: "MarkT",
+        text: "I noticed that the app crashes every time I try to log a workout that includes a custom exercise. This happens on both Android and iOS devices. The issue started after the last update, and I've tried reinstalling the app, but it didn't help. Please look into this as it's making it difficult to track my fitness progress."
+      },
+      {
+        id: 3, app: "TaskMaster", tag: "#TC01", labels: ["Feature"], rating: 3, name: "JaneSmith",
+        text: "The app loads very slowly on older devices."
+      },
+      {
+        id: 4, app: "TaskMaster", tag: "#TC01", labels: ["Performance"], rating: 4, name: "EmilyK",
+        text: "It would be amazing if you could add a dark mode option. Using the app for long periods, especially at night, can strain my eyes. Many modern apps offer this feature, and I believe it would enhance the overall user experience. Ideally, the dark mode should have an option to automatically switch based on system settings."
+      },
+      {
+        id: 5, app: "EventMate", tag: "#TC01", labels: ["UI/UX"], rating: 2, name: "AlexW",
+        text: "App crashes when logging workouts. I tried to login with google sign in. It kicking me out of the tool."
+      },
+      {
+        id: 6, app: "TaskMaster", tag: "#TC32", labels: ["Bug Report"], rating: 3, name: "David L",
+        text: "The step counter seems to be inaccurate. I compared it with my smartwatch and another fitness app, and TaskMaster consistently undercounts my steps by about 15%. Please investigate or allow recalibrating my phone's motion sensors. It would be great if you could investigate this or allow users to manually adjust...."
+      }
+    ];
+    // Track approve/deny state for each card
+    let cardStates = {};
+    let currentUser = '';
+
+    function renderCards(filterApp="All") {
+        
+      let html = '';
+      feedbackData.forEach(item => {
+        if (filterApp !== "All" && item.app !== filterApp) return;
+        let labelsHtml = `<span class="labels">${item.labels.map(l => `<span>${l}</span>`).join('')}</span>`;
+        let stars = "<span class='stars'>" + "★".repeat(item.rating) + "<span class='text-muted'>" + "★".repeat(5 - item.rating) + "</span></span>";
+        let state = cardStates[item.id] || {};
+        let statusHtml = '';
+        if (!state.status) {
+          statusHtml = `
+            <button class="btn btn-outline-success btn-action btn-approve" data-id="${item.id}">Approve</button>
+            <button class="btn btn-outline-danger btn-action btn-deny" data-id="${item.id}">Deny</button>
+          `;
+        } else {
+          let statusStr = state.status === "approved" ? "Approved" : "Denied";
+          let icon = state.status === "approved" ? "&#x2705;" : "&#x274C;";
+          let color = state.status === "approved" ? "success" : "danger";
+          statusHtml = `
+            <div class="dropdown d-inline">
+              <button class="btn btn-${color} btn-action dropdown-toggle" type="button" data-bs-toggle="dropdown" id="dropdownMenu${item.id}" aria-expanded="false">
+                ${statusStr} ${icon} by <b>${state.username || currentUser}</b>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu${item.id}">
+                <li><a class="dropdown-item action-option ${state.status==='approved'?'active':''}" data-action="approved" data-id="${item.id}" href="#">Approved</a></li>
+                <li><a class="dropdown-item action-option ${state.status==='denied'?'active':''}" data-action="denied" data-id="${item.id}" href="#">Denied</a></li>
+              </ul>
+            </div>
+          `;
+        }
+        html += `
+        <div class="col-lg-4 col-md-6 col-12">
+          <div class="card card-feedback px-3 pb-2">
+            <div class="stars mb-1">${stars}</div>
+            <div class="mb-1" style="font-size:13.3px;">${item.app} <span class="text-primary ms-1">${item.tag}</span> ${labelsHtml}</div>
+            <div style="font-size:0.95em;">${item.text}</div>
+            <div class="d-flex align-items-center justify-content-between mt-3 mb-1">
+              <div class="card-user">
+                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&size=32&background=167ef9&color=fff" class="avatar-sm me-2" alt="">
+                ${item.name}
+              </div>
+              <div class="card-actions">
+                ${statusHtml}
+              </div>
+            </div>
+          </div>
+        </div>`;
+      });
+      $("#feedback-cards-container").html(html);
+    }
+
+    // Prompt modal
+    function askUserName() {
+      $("#userModal").modal({backdrop:'static', keyboard:false}).modal('show');
+      $("#usernameInput").val('');
+      setTimeout(() => $("#usernameInput").focus(), 320);
+    }
+    function setupSidebar() {
+      $("#sidebar-apps").on("click", ".list-group-item", function() {
+        $("#sidebar-apps .list-group-item").removeClass("active");
+        $(this).addClass("active");
+        let app = $(this).data("app");
+        renderCards(app);
+      });
+    }
+    function setupCardActions() {
+      $("#feedback-cards-container")
+        .on("click", ".btn-approve", function() {
+          let id = $(this).data("id");
+          cardStates[id] = {status: "approved", username: currentUser};
+          renderCards($("#sidebar-apps .list-group-item.active").data("app"));
+        })
+        .on("click", ".btn-deny", function() {
+          let id = $(this).data("id");
+          cardStates[id] = {status: "denied", username: currentUser};
+          renderCards($("#sidebar-apps .list-group-item.active").data("app"));
+        })
+        .on("click", ".action-option", function(e) {
+          e.preventDefault();
+          let id = $(this).data("id");
+          let action = $(this).data("action");
+          cardStates[id] = {status: action, username: currentUser};
+          renderCards($("#sidebar-apps .list-group-item.active").data("app"));
+        });
+    }
+
+    $(function() {
+      askUserName();
+
+      $("#userForm").submit(function(e){
+        e.preventDefault();
+        let val = $("#usernameInput").val().trim();
+        if(!val){ $("#usernameInput").addClass("is-invalid"); return; }
+        currentUser = val;
+        $("#userModal").modal('hide');
+        renderCards();
+      });
+      $("#usernameInput").on("input", function(){ $(this).removeClass("is-invalid"); });
+      renderCards();
+      setupSidebar();
+      setupCardActions();
+
+      $("#btn-summarize").click(function(){
+        alert("Summary feature is not implemented in this demo.");
+      });
+    });
+    window.onload = function() {
+      cardStates = {};
+      currentUser = '';
+    };
+  </script>
+</body>
+</html>
