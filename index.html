@@ -1,338 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cloudnix UI Challenge</title>
+    <meta
+      name="description"
+      content="Cloudnix UI Challenge to showcase your front-end development skills."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css">
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Cloudnix UI Challenge</title>
-  <meta name="description" content="Cloudnix UI Challenge to showcase your front-end development skills.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    body {
-      background-color: #f2fffa;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    .sidebar {
-      background: #cfeaff;
-      border-radius: 10px;
-      padding: 20px;
-      height: 100%;
-      min-height: 100vh;
-    }
-
-    .sidebar a {
-      display: block;
-      color: #333;
-      padding: 10px 15px;
-      border-radius: 8px;
-      text-decoration: none;
-      margin-bottom: 10px;
-    }
-
-    .sidebar a.active {
-      background-color: white;
-      font-weight: 600;
-    }
-
-    .feedback-title {
-      font-size: 22px;
-      font-weight: 600;
-    }
-
-    .feedback-subtitle {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .feedback-card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      background: #fff;
-      position: relative;
-
-      /* Make card take full height of column */
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    /* Flex-grow content outside buttons to push buttons down */
-    .feedback-content {
-      flex-grow: 1;
-    }
-
-    .dropdown-menu {
-      min-width: 100px;
-    }
-
-    .star-rating {
-      color: #fbc02d;
-    }
-
-    .tag {
-      background: #F0F0F0;
-      border-radius: 4px;
-      padding: 2px 6px;
-      margin-right: 6px;
-      font-size: 12px;
-    }
-
-    .dropdown-toggle::after {
-      display: inline-block;
-      margin-left: .255em;
-      vertical-align: bottom !important;
-      content: '✵';
-      transform: rotate(270deg);
-      line-height: 1.3;
-      border: none !important;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container-fluid px-4 py-3">
-
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <small class="text-muted">Settings &gt; Feedback</small>
-        <h2 class="feedback-title fs-2 my-2">Feedback</h2>
-        <div class="feedback-subtitle">You will get user feedback on AI generated test cases</div>
-      </div>
-      <button class="btn btn-primary">Summarize</button>
-    </div>
-
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-2">
-        <div class="sidebar">
-          <a href="#" class="active">All</a>
-          <a href="#">TaskMaster</a>
-          <a href="#">FitTrack</a>
-          <a href="#">ShopEase</a>
-          <a href="#">LearnNow</a>
-          <a href="#">TravelGo</a>
-          <a href="#">HeathSync</a>
-          <a href="#">EventMate</a>
-        </div>
-      </div>
-
-      <!-- Feedback Cards -->
-      <div class="col-md-10">
-        <div id="feedback-container" class="row g-3">
-          <!-- Cards inserted here -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const username = prompt("Enter your name") || "Guest";
-
-      const feedbackData = [
-        {
-          id: 'TCD1',
-          app: "TaskMaster",
-          tags: ["#TC01", "UI/UX"],
-          rating: 3,
-          text: "The navigation bar is a bit confusing, especially when switching between different sections...",
-          user: "Steward leo",
-          org: "TaskMaster Testing"
-        },
-        {
-          id: 'TCD2',
-          app: "FitTrack",
-          tags: ["#FT01", "Bug Report"],
-          rating: 1,
-          text: "I noticed that the app crashes every time I try to log a workout that includes a custom exercise...",
-          user: "MarkT",
-          org: "TaskMaster Testing"
-        },
-        {
-          id: 'TCD3',
-          app: "TaskMaster",
-          tags: ["#TC01", "Feature"],
-          rating: 3,
-          text: "The app loads very slowly on older devices.",
-          user: "JaneSmith",
-          org: "TaskMaster Testing"
-        },
-        {
-          id: 'TCD4',
-          app: "TaskMaster",
-          tags: ["#TC01", "Performance"],
-          rating: 3,
-          text: "It would be amazing if you could add a dark mode option. Using the app at night can strain eyes...",
-          user: "EmilyK",
-          org: "TaskMaster Testing"
-        },
-        {
-          id: 'TCD5',
-          app: "TaskMaster",
-          tags: ["#TC302", "Bug Report"],
-          rating: 2,
-          text: "The step counter seems to be inaccurate. I compared it with my smartwatch...",
-          user: "David L",
-          org: "Zeta Testing"
-        },
-        {
-          id: 'TCD6',
-          app: "EventMate",
-          tags: ["#TC01", "UI/UX"],
-          rating: 2,
-          text: "App crashes when logging workouts. I tried to login with google sign in...",
-          user: "AlexW",
-          org: "TaskMaster Testing"
-        }
-      ];
-
-      const container = document.getElementById('feedback-container');
-
-      // Helper: Create stars string
-      function createStars(rating) {
-        return '★'.repeat(rating) + '☆'.repeat(5 - rating);
-      }
-
-      // Render cards
-      feedbackData.forEach(item => {
-        const tagsHtml = item.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-        const stars = createStars(item.rating);
-
-        const col = document.createElement('div');
-        col.className = 'col-md-6 col-lg-4 d-flex align-items-stretch';
-
-        col.innerHTML = `
-          <div class="feedback-card h-100 w-100 d-flex flex-column" data-id="${item.id}">
-            <div class="feedback-content flex-grow-1 d-flex flex-column">
-              <div class="d-flex justify-content-between">
-                <h5>${item.app}</h5>
-                <div class="star-rating">${stars}</div>
-              </div>
-              <div class="mb-2">${tagsHtml}</div>
-              <p class="flex-grow-1">${item.text}</p>
-              <div class="d-flex align-items-center mt-3">
-                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(item.user)}&background=random" width="32" height="32"
-                  class="rounded-circle me-2" alt="${item.user}" />
-                <div>
-                  <div class="profile">${item.user}</div>
-                  <small class="text-muted">${item.org}</small>
-                </div>
-              </div>
-            </div>
-            <div
-              class="mt-2 d-flex justify-content-between align-items-center feedback-buttons-container"
-              style="margin-top:12px;">
-              <p class="feedback-message text-muted mb-0"></p>
-              <div class="feedback-buttons">
-                <button class="btn btn-outline-danger btn-deny" type="button">Deny</button>
-                <button class="btn btn-outline-primary btn-approve" type="button">Approve</button>
-              </div>
-            </div>
+  <body>
+    <div class="container-fluid px-4 py-3">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <small class="text-muted"><span style="color: #0D2238;">Settings &gt;</span> <span style="color: #909090;">Feedback</span> </small>
+          <h2 class="feedback-title fs-2 my-2">Feedback</h2>
+          <div class="feedback-subtitle">
+            You will get user feedback on AI generated test cases
           </div>
-        `;
+        </div>
+        <button class="btn btn-summury" type="button">Summarize</button>
+      </div>
 
-        container.appendChild(col);
-      });
+      <div class="d-flex justify-content-between main">
+        <!-- Sidebar -->
+        <div class="sidebar-container">
+          <div class="sidebar">
+            <a href="#" class="active">All</a>
+            <a href="#">TaskMaster</a>
+            <a href="#">FitTrack</a>
+            <a href="#">ShopEase</a>
+            <a href="#">LearnNow</a>
+            <a href="#">TravelGo</a>
+            <a href="#">HeathSync</a>
+            <a href="#">EventMate</a>
+          </div>
+        </div>
 
-      // Event delegation for approve/deny buttons
-      container.addEventListener('click', event => {
-        const target = event.target;
-        if (target.classList.contains('btn-approve') || target.classList.contains('btn-deny')) {
-          const btn = target;
-          const card = btn.closest('.feedback-card');
-          const approveBtn = card.querySelector('.btn-approve');
-          const denyBtn = card.querySelector('.btn-deny');
-          const message = card.querySelector('.feedback-message');
+        <!-- Feedback Cards -->
+        <div class="feedbacks">
+          <div
+            id="feedback-container"
+            class="row row-gap-4 justify-content-between"
+          >
+            <!-- Cards inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
 
-          const isApprove = btn.classList.contains('btn-approve');
-          const currentHtml = btn.innerHTML;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-          if (currentHtml.includes("dropdown-toggle")) {
-            showDropdown(btn, approveBtn, denyBtn, message);
-          } else {
-            applyStatus(isApprove ? 'approved' : 'denied');
-          }
+    <script src="script.js"></script>
 
-          function applyStatus(status) {
-            // Reset buttons
-            approveBtn.classList.remove('btn-primary', 'btn-danger');
-            approveBtn.classList.add('btn-outline-primary');
-            approveBtn.textContent = 'Approve';
-            approveBtn.style.display = 'inline-block';
-
-            denyBtn.classList.remove('btn-danger', 'btn-primary');
-            denyBtn.classList.add('btn-outline-danger');
-            denyBtn.textContent = 'Deny';
-            denyBtn.style.display = 'inline-block';
-
-            if (status === 'approved') {
-              approveBtn.classList.remove('btn-outline-primary');
-              approveBtn.classList.add('btn-primary');
-              approveBtn.textContent = 'Approved';
-              approveBtn.insertAdjacentHTML('beforeend', `<span class="dropdown-toggle"></span>`);
-              denyBtn.style.display = 'none';
-              message.textContent = `Approved by ${username}`;
-            } else {
-              denyBtn.classList.remove('btn-outline-danger');
-              denyBtn.classList.add('btn-danger');
-              denyBtn.textContent = 'Denied';
-              denyBtn.insertAdjacentHTML('beforeend', `<span class="dropdown-toggle"></span>`);
-              approveBtn.style.display = 'none';
-              message.textContent = `Denied by ${username}`;
-            }
-          }
-
-          function showDropdown(button, approveBtn, denyBtn, message) {
-            const existingDropdown = document.querySelector('.dropdown-menu.show');
-            if (existingDropdown) existingDropdown.remove();
-
-            const dropdown = document.createElement('ul');
-            dropdown.className = 'dropdown-menu show';
-            dropdown.style.position = 'absolute';
-
-            const rect = button.getBoundingClientRect();
-            dropdown.style.top = (window.scrollY + rect.bottom) + 'px';
-            dropdown.style.left = (window.scrollX + rect.left) + 'px';
-            dropdown.style.zIndex = 9999;
-            dropdown.style.minWidth = '100px';
-
-            dropdown.innerHTML = `
-              <li><a class="dropdown-item" href="#" data-value="approved">Approved</a></li>
-              <li><a class="dropdown-item" href="#" data-value="denied">Denied</a></li>
-            `;
-
-            document.body.appendChild(dropdown);
-
-            dropdown.addEventListener('click', e => {
-              e.preventDefault();
-              if (e.target && e.target.matches('a.dropdown-item')) {
-                const selected = e.target.getAttribute('data-value');
-                applyStatus(selected);
-                dropdown.remove();
-              }
-            });
-
-            function onDocumentClick(e) {
-              if (!dropdown.contains(e.target) && e.target !== button) {
-                dropdown.remove();
-                document.removeEventListener('click', onDocumentClick);
-              }
-            }
-            document.addEventListener('click', onDocumentClick);
-          }
-        }
-      });
-    });
-  </script>
-</body>
-
+  </body>
 </html>

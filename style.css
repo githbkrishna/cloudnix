@@ -1,0 +1,181 @@
+body {
+    background-color: #f2f5fa;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+}
+
+.sidebar {
+    background: #E2F1FF;
+    border-radius: 10px;
+    padding: 20px;
+    height: 832px;
+    width: 264px;
+    padding-right: 50px;
+    border: 1px solid #CFEAFF;
+}
+
+.sidebar a {
+    display: block;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #2e3a59;
+}
+
+.sidebar a.active {
+    border-radius: 50px;
+    background-color: white;
+    font-weight: 600;
+    color: #0091FF;
+}
+
+.feedbacks {
+    padding-left: 35px;
+}
+
+.feedback-container {
+    height: auto;
+    width: calc(100% - 264px) !important;
+}
+
+.feedback-title {
+    font-size: 42px;
+    color: #0D2238;
+}
+
+.feedback-subtitle {
+    font-size: 18px;
+    color: #0D2238;
+    margin-bottom: 20px;
+}
+
+.text-muted {
+    font-size: 13px;
+}
+
+.feedback-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /* padding: 20px; */
+    margin-bottom: 20px;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.feedback-card-container {
+    width: 396px;
+    height: 340px;
+}
+
+.dropdown-menu {
+    min-width: 100px;
+}
+
+.star-rating {
+    color: #fbc02d;
+    font-size: 20px;
+}
+
+.tag {
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.tag:last-child {
+    background-color: #e7e9ed;
+    margin-right: 0;
+}
+
+.tag:first-child {
+    color: #0091ff;
+    font-weight: bold;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em !important;
+    vertical-align: bottom !important;
+    content: ">";
+    transform: rotate(90deg);
+    line-height: 1.2;
+    border: none !important;
+}
+
+.flex-grow-1-1 {
+    font-size: 14px;
+    color: #6f7684;
+    line-height: 20px;
+}
+
+.feedback-content {
+    padding: 15px;
+}
+
+.feedback-content h5 {
+    font-size: 16px;
+    color: #343434;
+}
+
+.btn {
+    height: 36px;
+    width: 92px;
+    border-radius: 7px;
+    line-height: 15px;
+}
+
+.btn.btn-deny {
+    color: #0091ff;
+    border: 1px solid #dddddd;
+}
+
+.btn.btn-approve {
+    background-color: #0091ff;
+    color: #fff;
+}
+
+.btn.btn-summury {
+    background-color: #0091ff;
+    width: 126px;
+    height: 42px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.btn-clicked {
+    width: auto;
+    line-height: 21px;
+}
+
+.btn.btn-approve {
+    background-color: #0091ff;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .main {
+        flex-wrap: wrap;
+    }
+
+    .sidebar-container {
+        width: 100%;
+    }
+
+    .sidebar {
+        width: auto;
+        height: auto;
+        margin-bottom: 2rem;
+        padding-right: 60px;
+    }
+
+    .feedbacks {
+        padding: 0;
+    }
+}
