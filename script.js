@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const stars = createStars(item.rating);
 
         const col = document.createElement("div");
-        col.className = "d-flex feedback-card-container";
+        col.className = "col-12 col-md-6 col-lg-4 feedback-card-container";
 
         col.innerHTML = `
           <div class="feedback-card h-100 w-100 d-flex flex-column justify-content-between" data-id="${item.id}">
