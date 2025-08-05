@@ -1,5 +1,37 @@
 const username = prompt("Enter your name") || "Guest";
 
+const Btn = document.getElementById("toggleBtn");
+
+const sidebar = document.querySelector(".sidebar");
+const feedbacks = document.querySelector(".feedbacks");
+const main = document.querySelector(".main");
+const feedbackContainer = document.querySelector(".feedback-container");
+
+Btn.addEventListener("click", function () {
+    main.classList.toggle("main2");
+    sidebar.classList.toggle("sidebaractive");
+    feedbacks.classList.toggle("feedbacks2");
+
+    const feedbackCardContainers = document.querySelectorAll(".feedback-card-container");
+
+    feedbackCardContainers.forEach(card => {
+        
+        console.log(card.tagName);
+        
+        if (card.classList.contains("col-md-6")) {
+            card.classList.replace("col-md-6", "col-md-4");
+            card.classList.replace("col-lg-4", "col-lg-3");
+        } else {
+            card.classList.replace("col-md-4", "col-md-6");
+            card.classList.replace("col-lg-3", "col-lg-4");
+        }
+    });
+});
+
+
+
+
+
 const feedbackData = [
     {
         id: "TCD1",
@@ -215,3 +247,4 @@ function toggleDropdown(card, selectedBtn) {
         });
     });
 }
+
